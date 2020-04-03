@@ -1,5 +1,5 @@
 name: 'Communicate on pull request merged'
-description: ''
+description: 'Gives you the power to make a comment on the pull request after its get merged.'
 inputs:
   github-token:
     description: 'Token for the repo. Can be passed in using {{ secrets.GITHUB_TOKEN }}'
