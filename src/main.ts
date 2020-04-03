@@ -3,7 +3,19 @@ import * as github from '@actions/github';
 
 export async function run() {
   try {
-    console.log(github.context.payload.action);
+    console.log(JSON.stringify(github.context.payload));
+    const isPullRequest: boolean = !!github.context.payload.pull_request;
+    if (!isPullRequest) {
+      console.log(
+        'The event that triggered this action was not a pull request, exiting'
+      );
+      return;
+    }
+
+    if (github.context.payload.action !== 'closed') {
+      console.log('No pull request was closed, exiting');
+      return;
+    }
 
     const repoToken = core.getInput('repo-token', {required: true});
     const client: github.GitHub = new github.GitHub(repoToken);

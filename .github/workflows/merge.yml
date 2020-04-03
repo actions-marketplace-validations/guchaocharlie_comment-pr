@@ -1,0 +1,20 @@
+name: Deploy to dev
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: 'Deploy to dev'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: guchaocharlie/comment-pr@v1
+        with:
+          repo-token: ${{ secrets.GH_TOKEN }}
+          pr-comment: "Hey :wave: Tssasadhank you for your contribution!"
