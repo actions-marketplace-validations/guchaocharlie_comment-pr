@@ -6,7 +6,7 @@ export async function run() {
     const repoToken = core.getInput('repo-token', {required: true});
     const client = new github.GitHub(repoToken);
     console.log(JSON.stringify(github.context));
-    const prNumber = github.context.payload.pull_request!.number;
+    const prNumber = 12;
 
     const merged = github.context.payload.pull_request!['merged'];
     if (!merged) {
