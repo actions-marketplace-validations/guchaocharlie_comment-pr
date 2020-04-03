@@ -3,14 +3,14 @@ import * as github from '@actions/github';
 
 export async function run() {
   try {
-    const repoToken = core.getInput('repo-token', {required: true});
+    const repoToken = core.getInput('github-token', {required: true});
     const client = new github.GitHub(repoToken);
     const prNumber = parseInt(github.context.payload.head_commit.message.match(/(?<=#)\d+/g)[0]);
 
     await addComment(
       client,
       prNumber,
-      core.getInput('pr-comment', {required: true})
+      core.getInput('comment', {required: true})
     );
   } catch (error) {
     core.setFailed(error.message);
