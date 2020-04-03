@@ -5,8 +5,7 @@ export async function run() {
   try {
     const repoToken = core.getInput('repo-token', {required: true});
     const client = new github.GitHub(repoToken);
-    console.log(JSON.stringify(github.context));
-    const prNumber = 13;
+    const prNumber = parseInt(github.context.payload.head_commit.message.match(/(?<=#)\d+/g)[0]);
 
     await addComment(
       client,
@@ -29,52 +28,6 @@ async function addComment(
     pull_number: prNumber,
     body: comment,
     event: 'COMMENT'
-  });
-}
-
-async function addLabels(
-  client: github.GitHub,
-  prNumber: number,
-  labels: string[]
-) {
-  await client.issues.addLabels({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: prNumber,
-    labels: labels
-  });
-}
-
-async function canRemoveLabelFromIssue(
-  client: github.GitHub,
-  prNumber: number,
-  label: string
-): Promise<boolean> {
-  const response = await client.issues.listLabelsOnIssue({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: prNumber
-  });
-
-  const issueLabels = response.data;
-  for (let issueLabel of issueLabels) {
-    if (issueLabel.name === label) {
-      return true;
-    }
-  }
-  return false;
-}
-
-async function removeLabel(
-  client: github.GitHub,
-  prNumber: number,
-  label: string
-) {
-  await client.issues.removeLabel({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: prNumber,
-    name: label
   });
 }
 

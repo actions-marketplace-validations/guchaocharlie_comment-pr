@@ -1,5 +1,5 @@
 {
-  "name": "communicate-on-pull-request-merged",
+  "name": "comment-pr",
   "version": "0.0.0",
   "private": true,
   "description": "An action for adding comments and labels to a pull request when it is merged",
@@ -13,7 +13,6 @@
     "actions",
     "fastlane"
   ],
-  "author": "fastlane",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0",
