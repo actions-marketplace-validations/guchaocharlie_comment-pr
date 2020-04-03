@@ -4,8 +4,8 @@ import * as github from '@actions/github';
 export async function run() {
   try {
     const repoToken = core.getInput('repo-token', {required: true});
-    const client: github.GitHub = new github.GitHub(repoToken);
-    console.log(JSON.stringify(github.context.payload));
+    const client = new github.GitHub(repoToken);
+    console.log(JSON.stringify(github.context));
     const prNumber = github.context.payload.pull_request!.number;
 
     const merged = github.context.payload.pull_request!['merged'];
