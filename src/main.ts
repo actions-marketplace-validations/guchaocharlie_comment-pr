@@ -6,25 +6,8 @@ export async function run() {
     const repoToken = core.getInput('repo-token', {required: true});
     const client = new github.GitHub(repoToken);
     console.log(JSON.stringify(github.context));
-    const prNumber = 12;
+    const prNumber = 13;
 
-    const merged = github.context.payload.pull_request!['merged'];
-    if (!merged) {
-      console.log('No pull request was merged, exiting');
-      return;
-    }
-
-    const labelToRemove = core.getInput('pr-label-to-remove');
-    const canRemoveLabel = await canRemoveLabelFromIssue(
-      client,
-      prNumber,
-      labelToRemove
-    );
-    if (canRemoveLabel) {
-      await removeLabel(client, prNumber, labelToRemove);
-    }
-
-    await addLabels(client, prNumber, [core.getInput('pr-label-to-add')]);
     await addComment(
       client,
       prNumber,
